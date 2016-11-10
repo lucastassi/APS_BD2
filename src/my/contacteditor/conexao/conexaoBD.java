@@ -45,7 +45,7 @@ public class conexaoBD {
             String url = "jdbc:postgresql://localhost:5432/postgres";
             String driver = "org.postgresql.Driver";
             Class.forName(driver);
-            conexao = DriverManager.getConnection(url,"postgres","postgres");
+            conexao = DriverManager.getConnection(url,"postgres","2402");
             System.out.println("Conexão efetuada com sucesso.");
             return conexao;    
         }

@@ -3,6 +3,7 @@
  */
 package my.contacteditor;
 
+import java.awt.Color;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -76,17 +77,17 @@ public class TelaPrefeitoCadastro extends javax.swing.JFrame {
         nome = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
         rg = new javax.swing.JTextField();
-        ufNasc = new javax.swing.JComboBox<String>();
+        ufNasc = new javax.swing.JComboBox<>();
         jLabel14 = new javax.swing.JLabel();
         jSeparator3 = new javax.swing.JSeparator();
         jLabel2 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
         cidade = new javax.swing.JTextField();
-        partidoComboBox = new javax.swing.JComboBox<String>();
+        partidoComboBox = new javax.swing.JComboBox<>();
         jLabel16 = new javax.swing.JLabel();
         jSeparator4 = new javax.swing.JSeparator();
         jLabel17 = new javax.swing.JLabel();
-        sexo = new javax.swing.JComboBox<String>();
+        sexo = new javax.swing.JComboBox<>();
         jLabel18 = new javax.swing.JLabel();
         nasc = new javax.swing.JFormattedTextField();
         jLabel19 = new javax.swing.JLabel();
@@ -96,13 +97,16 @@ public class TelaPrefeitoCadastro extends javax.swing.JFrame {
         numCampanha = new javax.swing.JFormattedTextField();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel23 = new javax.swing.JLabel();
-        numVice = new javax.swing.JFormattedTextField();
         jLabel24 = new javax.swing.JLabel();
+        numVice = new javax.swing.JFormattedTextField();
         nomeVice = new javax.swing.JTextField();
         titulo = new javax.swing.JFormattedTextField();
         jLabel25 = new javax.swing.JLabel();
-        orgaoEmissor = new javax.swing.JComboBox<String>();
-        estado = new javax.swing.JComboBox<String>();
+        orgaoEmissor = new javax.swing.JComboBox<>();
+        estado = new javax.swing.JComboBox<>();
+        rb_prefeito = new javax.swing.JRadioButton();
+        rb_vereador = new javax.swing.JRadioButton();
+        jLabel26 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setAlwaysOnTop(true);
@@ -284,13 +288,13 @@ public class TelaPrefeitoCadastro extends javax.swing.JFrame {
 
         jLabel23.setText("*Nº de Campanha (Vice):");
 
+        jLabel24.setText("*Nome (Vice):");
+
         try {
             numVice.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
-
-        jLabel24.setText("*Nome (Vice):");
 
         nomeVice.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -311,6 +315,22 @@ public class TelaPrefeitoCadastro extends javax.swing.JFrame {
                 estadoActionPerformed(evt);
             }
         });
+
+        rb_prefeito.setText("Prefeito");
+        rb_prefeito.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rb_prefeitoActionPerformed(evt);
+            }
+        });
+
+        rb_vereador.setText("Vereador");
+        rb_vereador.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rb_vereadorActionPerformed(evt);
+            }
+        });
+
+        jLabel26.setText("*Candidatura: ");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -361,16 +381,6 @@ public class TelaPrefeitoCadastro extends javax.swing.JFrame {
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                         .addGroup(layout.createSequentialGroup()
                                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(jLabel1)
-                                                .addComponent(jLabel22))
-                                            .addGap(29, 29, 29)
-                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addGroup(layout.createSequentialGroup()
-                                                    .addComponent(numCampanha, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                    .addGap(355, 355, 355))
-                                                .addComponent(nomeCampanha, javax.swing.GroupLayout.DEFAULT_SIZE, 579, Short.MAX_VALUE)))
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                 .addComponent(jLabel24)
                                                 .addComponent(jLabel23)
                                                 .addComponent(jLabel16))
@@ -419,17 +429,36 @@ public class TelaPrefeitoCadastro extends javax.swing.JFrame {
                                                                     .addComponent(ufNasc, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                                                         .addComponent(jLabel21)
                                                         .addComponent(jLabel10)))
-                                                .addComponent(nome)))))
+                                                .addComponent(nome)))
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(jLabel1)
+                                                .addComponent(jLabel22))
+                                            .addGap(29, 29, 29)
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addGroup(layout.createSequentialGroup()
+                                                    .addComponent(numCampanha, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addGap(355, 355, 355))
+                                                .addComponent(nomeCampanha, javax.swing.GroupLayout.DEFAULT_SIZE, 579, Short.MAX_VALUE)))))
                                 .addGap(0, 59, Short.MAX_VALUE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel2)))
+                        .addComponent(jLabel2))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(328, 328, 328)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel11)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jLabel26)
+                                .addGap(245, 245, 245)
+                                .addComponent(rb_prefeito)
+                                .addGap(18, 18, 18)
+                                .addComponent(rb_vereador)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(328, 328, 328)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel11))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -515,32 +544,38 @@ public class TelaPrefeitoCadastro extends javax.swing.JFrame {
                                             .addComponent(jLabel14)
                                             .addComponent(estado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                                 .addGap(5, 5, 5)))
-                        .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel1)
-                            .addComponent(nomeCampanha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(12, 12, 12)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel22)
-                            .addComponent(numCampanha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel24)
-                            .addComponent(nomeVice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel23)
-                            .addComponent(numVice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(12, 12, 12)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel16)
-                            .addComponent(partidoComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18))
+                        .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(238, 238, 238)
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(jLabel2)))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(rb_prefeito)
+                    .addComponent(rb_vereador)
+                    .addComponent(jLabel26))
+                .addGap(29, 29, 29)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(nomeCampanha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(12, 12, 12)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel22)
+                    .addComponent(numCampanha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel24)
+                    .addComponent(nomeVice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel23)
+                    .addComponent(numVice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(12, 12, 12)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel16)
+                    .addComponent(partidoComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(cadastrar)
@@ -696,6 +731,24 @@ public class TelaPrefeitoCadastro extends javax.swing.JFrame {
 // TODO add your handling code here:
     }//GEN-LAST:event_formWindowClosing
 
+    private void rb_prefeitoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rb_prefeitoActionPerformed
+      if(rb_prefeito.isSelected()){
+            nomeVice.setEditable(true);
+            nomeVice.setBackground(Color.WHITE);
+            numVice.setBackground(Color.WHITE);
+            rb_vereador.setSelected(false);
+      }
+    }//GEN-LAST:event_rb_prefeitoActionPerformed
+
+    private void rb_vereadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rb_vereadorActionPerformed
+      if(rb_vereador.isSelected()){
+            nomeVice.setEditable(false);
+            nomeVice.setBackground(Color.LIGHT_GRAY);
+            numVice.setBackground(Color.LIGHT_GRAY);
+            rb_prefeito.setSelected(false);
+      }
+    }//GEN-LAST:event_rb_vereadorActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -765,6 +818,7 @@ public class TelaPrefeitoCadastro extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
+    private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -784,6 +838,8 @@ public class TelaPrefeitoCadastro extends javax.swing.JFrame {
     private javax.swing.JTextField numero;
     private javax.swing.JComboBox<String> orgaoEmissor;
     private javax.swing.JComboBox<String> partidoComboBox;
+    private javax.swing.JRadioButton rb_prefeito;
+    private javax.swing.JRadioButton rb_vereador;
     private javax.swing.JTextField rg;
     private javax.swing.JTextField rua;
     private javax.swing.JComboBox<String> sexo;
