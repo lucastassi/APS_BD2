@@ -5,6 +5,7 @@
  */
 package my.contacteditor;
 
+import java.awt.Color;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -21,8 +22,8 @@ import my.contacteditor.conexao.conexaoBD;
  */
 public class ConsultarExcluir extends javax.swing.JFrame {
 
+    conexaoBD cb = new conexaoBD();
     public String informacaoTabelaCPF;
-    
     
     /**
      * Creates new form ConsultarExcluir
@@ -31,6 +32,11 @@ public class ConsultarExcluir extends javax.swing.JFrame {
         initComponents();
         DefaultTableModel modelo = (DefaultTableModel) tabelaConsulta.getModel();
         tabelaConsulta.setRowSorter(new TableRowSorter(modelo));
+        
+        cb.conectarBD();
+        cb.popularComboBoxEstado(cbEstado);
+        cb.popularComboBoxPartido(cbPartido);
+        cb.desconBD();
     }
 
     //Pega o CPF na Tabela
@@ -55,8 +61,8 @@ public class ConsultarExcluir extends javax.swing.JFrame {
         jCheckBox1 = new javax.swing.JCheckBox();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        cpf1 = new javax.swing.JFormattedTextField();
-        jComboBox1 = new javax.swing.JComboBox<String>();
+        campoCPF = new javax.swing.JFormattedTextField();
+        cbEscolha = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabelaConsulta = new javax.swing.JTable();
@@ -64,6 +70,11 @@ public class ConsultarExcluir extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
+        numeroCampanha = new javax.swing.JTextField();
+        cbEstado = new javax.swing.JComboBox<>();
+        cbPartido = new javax.swing.JComboBox<>();
+        jLabel3 = new javax.swing.JLabel();
+        quantidadeRegistros = new javax.swing.JLabel();
 
         try {
             cpf.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
@@ -95,20 +106,20 @@ public class ConsultarExcluir extends javax.swing.JFrame {
         });
 
         try {
-            cpf1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
+            campoCPF.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
-        cpf1.addActionListener(new java.awt.event.ActionListener() {
+        campoCPF.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cpf1ActionPerformed(evt);
+                campoCPFActionPerformed(evt);
             }
         });
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "CPF", "Nº de Campanha" }));
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+        cbEscolha.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "CPF", "Nº DE CAMPANHA", "ESTADO", "PARTIDO" }));
+        cbEscolha.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
+                cbEscolhaActionPerformed(evt);
             }
         });
 
@@ -155,6 +166,22 @@ public class ConsultarExcluir extends javax.swing.JFrame {
             }
         });
 
+        cbEstado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbEstadoActionPerformed(evt);
+            }
+        });
+
+        cbPartido.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbPartidoActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setText("Número de registros encontrados: ");
+
+        quantidadeRegistros.setFont(new java.awt.Font("Ubuntu", 1, 13)); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -163,28 +190,39 @@ public class ConsultarExcluir extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(78, 78, 78))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(cbEscolha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(campoCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(numeroCampanha, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(cbPartido, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(cbEstado, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGap(195, 195, 195))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jButton4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton2)
-                        .addGap(6, 6, 6))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel2)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(cpf1, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton2))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(quantidadeRegistros)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addComponent(jButton1)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -192,16 +230,25 @@ public class ConsultarExcluir extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel2)
-                .addGap(31, 31, 31)
+                .addGap(32, 32, 32)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cpf1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbEscolha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1)
+                    .addComponent(campoCPF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(numeroCampanha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(cbEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(cbPartido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton3)
-                    .addComponent(jButton1))
-                .addGap(18, 18, 18)
+                    .addComponent(jButton1)
+                    .addComponent(jLabel3)
+                    .addComponent(quantidadeRegistros))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
+                .addGap(37, 37, 37)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2)
                     .addComponent(jButton4)
@@ -245,6 +292,8 @@ public class ConsultarExcluir extends javax.swing.JFrame {
                 
             }
             
+            quantidadeRegistros.setText(Integer.toString(modelo.getRowCount()));
+            
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -256,16 +305,35 @@ public class ConsultarExcluir extends javax.swing.JFrame {
 
     }//GEN-LAST:event_cpfActionPerformed
 
-    private void cpf1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cpf1ActionPerformed
+    private void campoCPFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoCPFActionPerformed
 
-    }//GEN-LAST:event_cpf1ActionPerformed
+    }//GEN-LAST:event_campoCPFActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
             ArrayList<PrefeitoDAO> p = new ArrayList<PrefeitoDAO>();
             conexaoBD cb = new conexaoBD();
             
             try{
-                p = (ArrayList<PrefeitoDAO>) cb.consultaTodosPorCPF(cpf1.getText());
+                if(cbEscolha.getSelectedItem().equals("CPF")){ //Faz a pesquisa no banco de acordo com o escolhido.
+                    p = (ArrayList<PrefeitoDAO>) cb.consultaTodosPorCPF(campoCPF.getText());
+                }
+                
+                if(cbEscolha.getSelectedItem().equals("Nº DE CAMPANHA")){
+                    p = (ArrayList<PrefeitoDAO>) cb.consultaTodosPorNumCampanha(numeroCampanha.getText());
+                }
+                
+                if(cbEscolha.getSelectedItem().equals("ESTADO")){
+                    p = (ArrayList<PrefeitoDAO>) cb.consultaTodosPorEstado(cbEstado.getSelectedItem().toString().substring(0,2).trim());
+                   // System.out.println("TESTE:  "+ cbEstado.getSelectedItem().toString().substring(0,2).trim());
+                }
+                
+                if(cbEscolha.getSelectedItem().equals("PARTIDO")){
+                    p = (ArrayList<PrefeitoDAO>) cb.consultaTodosPorPartido(cbPartido.getSelectedItem().toString().substring(0,2).trim());
+                    System.out.println("TESTE:  "+ cbPartido.getSelectedItem().toString().substring(0,2).trim());
+                }
+                
+                
+                
             } catch (SQLException ex) {
             
                 Logger.getLogger(ConsultarExcluir.class.getName()).log(Level.SEVERE, null, ex);
@@ -293,11 +361,57 @@ public class ConsultarExcluir extends javax.swing.JFrame {
                 });
                 
             }
+            
+            quantidadeRegistros.setText(Integer.toString(modelo.getRowCount()));
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
+    private void cbEscolhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbEscolhaActionPerformed
+        if(cbEscolha.getSelectedItem().equals("CPF")){
+            numeroCampanha.setEditable(false);
+            numeroCampanha.setText("");
+            numeroCampanha.setBackground(Color.LIGHT_GRAY);
+            cbPartido.setEnabled(false);
+            cbEstado.setEnabled(false);
+            campoCPF.setEditable(true);
+            campoCPF.setBackground(Color.WHITE);
+        }else{
+            if(cbEscolha.getSelectedItem().equals("ESTADO")){   
+                numeroCampanha.setEditable(false);
+                numeroCampanha.setText("");
+                numeroCampanha.setBackground(Color.LIGHT_GRAY);
+                cbEstado.setEnabled(true);
+                cbPartido.setEnabled(false);
+                numeroCampanha.setEditable(false);
+                campoCPF.setEditable(false);
+                campoCPF.setText("");
+                campoCPF.setBackground(Color.LIGHT_GRAY);
+            }
+        }
+        
+        if(cbEscolha.getSelectedItem().equals("PARTIDO")){
+                cbEstado.setEnabled(false);
+                cbPartido.setEnabled(true);
+                numeroCampanha.setEditable(false);
+                campoCPF.setEditable(false);
+                campoCPF.setBackground(Color.LIGHT_GRAY);
+                numeroCampanha.setEditable(false);
+                numeroCampanha.setBackground(Color.LIGHT_GRAY);
+                campoCPF.setText("");
+                numeroCampanha.setText("");
+        }
+        
+        if(cbEscolha.getSelectedItem().equals("Nº DE CAMPANHA")){
+                cbEstado.setEnabled(false);
+                cbPartido.setEnabled(false);
+                numeroCampanha.setEditable(true);
+                campoCPF.setEditable(false);
+                campoCPF.setBackground(Color.LIGHT_GRAY);
+                numeroCampanha.setEditable(true);
+                numeroCampanha.setBackground(Color.WHITE);
+                campoCPF.setText("");
+                
+        }
+    }//GEN-LAST:event_cbEscolhaActionPerformed
 
     private void tabelaConsultaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaConsultaMouseClicked
         informacaoTabelaCPF = info();
@@ -318,7 +432,7 @@ public class ConsultarExcluir extends javax.swing.JFrame {
                 String info = info();
 
                 cb.excluirCandidato(info);
-                JOptionPane.showMessageDialog(null, "Fornecedor excluído com sucesso!");
+                JOptionPane.showMessageDialog(null, "Candidato excluído com sucesso!");
                 
                 DefaultTableModel modelo = (DefaultTableModel) tabelaConsulta.getModel();
                 modelo.setNumRows(0);
@@ -346,54 +460,51 @@ public class ConsultarExcluir extends javax.swing.JFrame {
         ac.setVisible(true);
     }//GEN-LAST:event_jButton4ActionPerformed
 
+    private void cbEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbEstadoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbEstadoActionPerformed
+
+    private void cbPartidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbPartidoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbPartidoActionPerformed
+
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ConsultarExcluir.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ConsultarExcluir.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ConsultarExcluir.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ConsultarExcluir.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
+public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ConsultarExcluir().setVisible(true);
+           try{   
+               javax.swing.UIManager um = new javax.swing.UIManager();
+               um.setLookAndFeel(um.getSystemLookAndFeelClassName());
+           }catch(Exception e){
+               e.printStackTrace();
+           }
+           finally {
+                new ConsultarExcluir().setVisible(true); //troque o nemo do frame!
+            }
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JFormattedTextField campoCPF;
+    private javax.swing.JComboBox<String> cbEscolha;
+    private javax.swing.JComboBox<String> cbEstado;
+    private javax.swing.JComboBox<String> cbPartido;
     private javax.swing.JFormattedTextField cpf;
-    private javax.swing.JFormattedTextField cpf1;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField numeroCampanha;
+    private javax.swing.JLabel quantidadeRegistros;
     private javax.swing.JTable tabelaConsulta;
     // End of variables declaration//GEN-END:variables
 

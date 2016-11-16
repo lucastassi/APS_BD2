@@ -97,8 +97,8 @@ public class TelaPrefeitoCadastro extends javax.swing.JFrame {
         numCampanha = new javax.swing.JFormattedTextField();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel23 = new javax.swing.JLabel();
-        jLabel24 = new javax.swing.JLabel();
         numVice = new javax.swing.JFormattedTextField();
+        jLabel24 = new javax.swing.JLabel();
         nomeVice = new javax.swing.JTextField();
         titulo = new javax.swing.JFormattedTextField();
         jLabel25 = new javax.swing.JLabel();
@@ -288,13 +288,13 @@ public class TelaPrefeitoCadastro extends javax.swing.JFrame {
 
         jLabel23.setText("*Nº de Campanha (Vice):");
 
-        jLabel24.setText("*Nome (Vice):");
-
         try {
             numVice.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
+
+        jLabel24.setText("*Nome (Vice):");
 
         nomeVice.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -752,41 +752,18 @@ public class TelaPrefeitoCadastro extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TelaPrefeitoCadastro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TelaPrefeitoCadastro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TelaPrefeitoCadastro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TelaPrefeitoCadastro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
+public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TelaPrefeitoCadastro().setVisible(true);
+           try{   
+               javax.swing.UIManager um = new javax.swing.UIManager();
+               um.setLookAndFeel(um.getSystemLookAndFeelClassName());
+           }catch(Exception e){
+               e.printStackTrace();
+           }
+           finally {
+                new TelaPrefeitoCadastro().setVisible(true); //troque o nemo do frame!
+            }
             }
         });
     }

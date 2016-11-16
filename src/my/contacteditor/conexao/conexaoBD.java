@@ -263,5 +263,88 @@ public List<PrefeitoDAO> consultaTodosPorCPF(String cpf) throws SQLException{
         
     }
 
+public List<PrefeitoDAO> consultaTodosPorNumCampanha(String num) throws SQLException{
+        
+    List<PrefeitoDAO> clis = new ArrayList<>();
+        conectarBD();
+        
+        try (PreparedStatement pstm = conexao.prepareStatement("select cand_cpf, cand_camp_nome, cand_nome, cand_camp_nro, cand_partido, cand_vice_nome from CANDIDATO where cand_camp_nro = '"+num+"' ")) {
+            ResultSet rs = pstm.executeQuery();
+           
+            while(rs.next()){              
+                PrefeitoDAO cli = new PrefeitoDAO();
+                
+                cli.setCpf(rs.getString("cand_cpf"));
+                cli.setNomeReal(rs.getString("cand_nome"));
+                cli.setNomeFantasia(rs.getString("cand_camp_nome"));
+                cli.setNumeroCampanha(rs.getInt("cand_camp_nro"));
+                cli.setPartido(rs.getString("cand_partido"));
+                cli.setNomeVice(rs.getString("cand_vice_nome"));
+                
+            clis.add(cli);
+            }   
+        }
+        
+       desconBD();
+        
+       return clis; 
+        
+    }
+
+public List<PrefeitoDAO> consultaTodosPorEstado(String cod_estado) throws SQLException{
+        
+    List<PrefeitoDAO> clis = new ArrayList<>();
+        conectarBD();
+        
+        try (PreparedStatement pstm = conexao.prepareStatement("select cand_cpf, cand_camp_nome, cand_nome, cand_camp_nro, cand_partido, cand_vice_nome from CANDIDATO where cand_uf= '"+cod_estado+"' ")) {
+            ResultSet rs = pstm.executeQuery();
+           
+            while(rs.next()){              
+                PrefeitoDAO cli = new PrefeitoDAO();
+                
+                cli.setCpf(rs.getString("cand_cpf"));
+                cli.setNomeReal(rs.getString("cand_nome"));
+                cli.setNomeFantasia(rs.getString("cand_camp_nome"));
+                cli.setNumeroCampanha(rs.getInt("cand_camp_nro"));
+                cli.setPartido(rs.getString("cand_partido"));
+                cli.setNomeVice(rs.getString("cand_vice_nome"));
+                
+            clis.add(cli);
+            }   
+        }
+        
+       desconBD();
+        
+       return clis; 
+        
+    }
+
+public List<PrefeitoDAO> consultaTodosPorPartido(String cod_partido) throws SQLException{
+        
+    List<PrefeitoDAO> clis = new ArrayList<>();
+        conectarBD();
+        
+        try (PreparedStatement pstm = conexao.prepareStatement("select cand_cpf, cand_camp_nome, cand_nome, cand_camp_nro, cand_partido, cand_vice_nome from CANDIDATO where cand_partido = '"+cod_partido+"' ")) {
+            ResultSet rs = pstm.executeQuery();
+           
+            while(rs.next()){              
+                PrefeitoDAO cli = new PrefeitoDAO();
+                
+                cli.setCpf(rs.getString("cand_cpf"));
+                cli.setNomeReal(rs.getString("cand_nome"));
+                cli.setNomeFantasia(rs.getString("cand_camp_nome"));
+                cli.setNumeroCampanha(rs.getInt("cand_camp_nro"));
+                cli.setPartido(rs.getString("cand_partido"));
+                cli.setNomeVice(rs.getString("cand_vice_nome"));
+                
+            clis.add(cli);
+            }   
+        }
+        
+       desconBD();
+        
+       return clis; 
+        
+    }
 
 }
