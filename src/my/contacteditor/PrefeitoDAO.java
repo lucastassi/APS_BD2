@@ -39,11 +39,12 @@ public class PrefeitoDAO {
     private int numeroCampanha;
     private int numeroCampanhaVice;
     private String partido;
+    private String tipo_candidatura;
     
     public PrefeitoDAO(String cpf, String nomeReal, String nomeFantasia, String rg, String telefone1, 
             String telefone2, String nomeVice, String rua,String bairro,String numeroRua, String cep, String cidade, 
             String estado, String tituloEleitor, String sexo, String dataNasc, String ufNasc, String orgaoEmissor, 
-            int numeroCampanha, int numeroCampanhaVice,String partido) {
+            int numeroCampanha, int numeroCampanhaVice,String partido, String tipo_candidatura) {
          this.cpf = cpf;
          this.nomeReal = nomeReal;
          this.nomeFantasia = nomeFantasia;
@@ -65,6 +66,7 @@ public class PrefeitoDAO {
          this.telefone1 = telefone1;
          this.telefone2 = telefone2;
          this.tituloEleitor = tituloEleitor;
+         this.tipo_candidatura = tipo_candidatura;
     }
 
     public String getCpf() {
@@ -233,6 +235,14 @@ public class PrefeitoDAO {
 
     public void setPartido(String partido) {
         this.partido = partido;
+    }
+    
+    public String getCandidatura() {
+        return tipo_candidatura;
+    }
+
+    public void setCandidatura(String tipo_candidatura) {
+        this.tipo_candidatura = tipo_candidatura;
     }
     
 

@@ -87,7 +87,7 @@ public class conexaoBD {
                     + "cand_end_rua = '"+p.getRua()+"',cand_end_nro = '"+p.getNumeroRua()+"',cand_end_bairro = '"+p.getBairro()+"',"
                     + "cand_end_cep = '"+p.getCep()+"', cand_end_cidade = '"+p.getCidade()+"',cand_end_estado = '"+Integer.parseInt(p.getEstado().substring(0,2).trim())+"',"
                     + "cand_camp_nome = '"+p.getNomeFantasia()+"',cand_camp_nro = '"+p.getNumeroCampanha()+"',cand_vice_nome = '"+p.getNomeVice()+"',"
-                    + "cand_vice_nro = '"+p.getNumeroCampanhaVice()+"',cand_partido = '"+Integer.parseInt(p.getPartido().substring(0,2).trim())+"'  where cand_cpf= '"+p.getCpf()+"';"); 
+                    + "cand_vice_nro = '"+p.getNumeroCampanhaVice()+"',cand_partido = '"+Integer.parseInt(p.getPartido().substring(0,2).trim())+"', tipo_candidatura = '"+p.getCandidatura()+"'  where cand_cpf= '"+p.getCpf()+"';"); 
     
         desconBD();
     }
@@ -98,10 +98,10 @@ public class conexaoBD {
         state = conexao.createStatement();
         
         state.executeUpdate("insert into CANDIDATO (cand_nome,cand_cpf,cand_tit_ele,cand_sexo,cand_nasc,cand_rg,cand_uf,cand_org_emissor,cand_tel1,cand_tel2,cand_end_rua,cand_end_nro,"
-                + "         cand_end_bairro,cand_end_cep,cand_end_cidade,cand_end_estado,cand_camp_nome,cand_camp_nro,cand_vice_nome,cand_vice_nro,cand_partido)"
+                + "         cand_end_bairro,cand_end_cep,cand_end_cidade,cand_end_estado,cand_camp_nome,cand_camp_nro,cand_vice_nome,cand_vice_nro,cand_partido, tipo_candidatura)"
                     + "values ('"+p.getNomeReal()+"','"+p.getCpf()+"','"+p.getTituloEleitor()+"','"+Integer.parseInt(p.getSexo().substring(0,1))+"','"+p.getDataNasc()+"','"+p.getRg()+"','"+Integer.parseInt(p.getUfNasc().substring(0,2).trim())+"',"
                     + "'"+Integer.parseInt(p.getOrgaoEmissor().substring(0,2).trim())+"','"+p.getTelefone1()+"','"+p.getTelefone2()+"','"+p.getRua()+"','"+p.getNumeroRua()+"','"+p.getBairro()+"','"+p.getCep()+"',"
-                + " '"+p.getCidade()+"','"+Integer.parseInt(p.getEstado().substring(0,2).trim())+"','"+p.getNomeFantasia()+"','"+p.getNumeroCampanha()+"','"+p.getNomeVice()+"','"+p.getNumeroCampanhaVice()+"','"+Integer.parseInt(p.getPartido().substring(0,2).trim())+"');");
+                + " '"+p.getCidade()+"','"+Integer.parseInt(p.getEstado().substring(0,2).trim())+"','"+p.getNomeFantasia()+"','"+p.getNumeroCampanha()+"','"+p.getNomeVice()+"','"+p.getNumeroCampanhaVice()+"','"+Integer.parseInt(p.getPartido().substring(0,2).trim())+"','"+p.getCandidatura()+"');");
 
         desconBD();
     }
@@ -212,7 +212,7 @@ public List<PrefeitoDAO> consultaTodos() throws SQLException{
     List<PrefeitoDAO> clis = new ArrayList<>();
         conectarBD();
         
-        try (PreparedStatement pstm = conexao.prepareStatement("select cand_cpf, cand_camp_nome, cand_nome, cand_camp_nro, cand_partido, cand_vice_nome from CANDIDATO")) {
+        try (PreparedStatement pstm = conexao.prepareStatement("select cand_cpf, cand_camp_nome, cand_nome, cand_camp_nro, cand_partido, cand_vice_nome, tipo_candidatura from CANDIDATO")) {
             ResultSet rs = pstm.executeQuery();
            
             while(rs.next()){              
@@ -224,6 +224,7 @@ public List<PrefeitoDAO> consultaTodos() throws SQLException{
                 cli.setNumeroCampanha(rs.getInt("cand_camp_nro"));
                 cli.setPartido(rs.getString("cand_partido"));
                 cli.setNomeVice(rs.getString("cand_vice_nome"));
+                cli.setCandidatura(rs.getString("tipo_candidatura"));
                 
             clis.add(cli);
             }   
@@ -240,7 +241,7 @@ public List<PrefeitoDAO> consultaTodosPorCPF(String cpf) throws SQLException{
     List<PrefeitoDAO> clis = new ArrayList<>();
         conectarBD();
         
-        try (PreparedStatement pstm = conexao.prepareStatement("select cand_cpf, cand_camp_nome, cand_nome, cand_camp_nro, cand_partido, cand_vice_nome from CANDIDATO where cand_cpf = '"+cpf+"' ")) {
+        try (PreparedStatement pstm = conexao.prepareStatement("select cand_cpf, cand_camp_nome, cand_nome, cand_camp_nro, cand_partido, cand_vice_nome, tipo_candidatura from CANDIDATO where cand_cpf = '"+cpf+"' ")) {
             ResultSet rs = pstm.executeQuery();
            
             while(rs.next()){              
@@ -252,6 +253,7 @@ public List<PrefeitoDAO> consultaTodosPorCPF(String cpf) throws SQLException{
                 cli.setNumeroCampanha(rs.getInt("cand_camp_nro"));
                 cli.setPartido(rs.getString("cand_partido"));
                 cli.setNomeVice(rs.getString("cand_vice_nome"));
+                cli.setCandidatura(rs.getString("tipo_candidatura"));
                 
             clis.add(cli);
             }   
@@ -268,7 +270,7 @@ public List<PrefeitoDAO> consultaTodosPorNumCampanha(String num) throws SQLExcep
     List<PrefeitoDAO> clis = new ArrayList<>();
         conectarBD();
         
-        try (PreparedStatement pstm = conexao.prepareStatement("select cand_cpf, cand_camp_nome, cand_nome, cand_camp_nro, cand_partido, cand_vice_nome from CANDIDATO where cand_camp_nro = '"+num+"' ")) {
+        try (PreparedStatement pstm = conexao.prepareStatement("select cand_cpf, cand_camp_nome, cand_nome, cand_camp_nro, cand_partido, cand_vice_nome, tipo_candidatura from CANDIDATO where cand_camp_nro = '"+num+"' ")) {
             ResultSet rs = pstm.executeQuery();
            
             while(rs.next()){              
@@ -280,6 +282,7 @@ public List<PrefeitoDAO> consultaTodosPorNumCampanha(String num) throws SQLExcep
                 cli.setNumeroCampanha(rs.getInt("cand_camp_nro"));
                 cli.setPartido(rs.getString("cand_partido"));
                 cli.setNomeVice(rs.getString("cand_vice_nome"));
+                cli.setCandidatura(rs.getString("tipo_candidatura"));
                 
             clis.add(cli);
             }   
@@ -296,7 +299,7 @@ public List<PrefeitoDAO> consultaTodosPorEstado(String cod_estado) throws SQLExc
     List<PrefeitoDAO> clis = new ArrayList<>();
         conectarBD();
         
-        try (PreparedStatement pstm = conexao.prepareStatement("select cand_cpf, cand_camp_nome, cand_nome, cand_camp_nro, cand_partido, cand_vice_nome from CANDIDATO where cand_uf= '"+cod_estado+"' ")) {
+        try (PreparedStatement pstm = conexao.prepareStatement("select cand_cpf, cand_camp_nome, cand_nome, cand_camp_nro, cand_partido, cand_vice_nome, tipo_candidatura from CANDIDATO where cand_uf= '"+cod_estado+"' ")) {
             ResultSet rs = pstm.executeQuery();
            
             while(rs.next()){              
@@ -308,6 +311,7 @@ public List<PrefeitoDAO> consultaTodosPorEstado(String cod_estado) throws SQLExc
                 cli.setNumeroCampanha(rs.getInt("cand_camp_nro"));
                 cli.setPartido(rs.getString("cand_partido"));
                 cli.setNomeVice(rs.getString("cand_vice_nome"));
+                cli.setCandidatura(rs.getString("tipo_candidatura"));
                 
             clis.add(cli);
             }   
@@ -324,7 +328,7 @@ public List<PrefeitoDAO> consultaTodosPorPartido(String cod_partido) throws SQLE
     List<PrefeitoDAO> clis = new ArrayList<>();
         conectarBD();
         
-        try (PreparedStatement pstm = conexao.prepareStatement("select cand_cpf, cand_camp_nome, cand_nome, cand_camp_nro, cand_partido, cand_vice_nome from CANDIDATO where cand_partido = '"+cod_partido+"' ")) {
+        try (PreparedStatement pstm = conexao.prepareStatement("select cand_cpf, cand_camp_nome, cand_nome, cand_camp_nro, cand_partido, cand_vice_nome, tipo_candidatura from CANDIDATO where cand_partido = '"+cod_partido+"' ")) {
             ResultSet rs = pstm.executeQuery();
            
             while(rs.next()){              
@@ -337,6 +341,7 @@ public List<PrefeitoDAO> consultaTodosPorPartido(String cod_partido) throws SQLE
                 cli.setPartido(rs.getString("cand_partido"));
                 cli.setNomeVice(rs.getString("cand_vice_nome"));
                 
+                
             clis.add(cli);
             }   
         }
@@ -347,4 +352,62 @@ public List<PrefeitoDAO> consultaTodosPorPartido(String cod_partido) throws SQLE
         
     }
 
+public List<PrefeitoDAO> consultaTodosPorCategoria(String categoria) throws SQLException{
+        
+    List<PrefeitoDAO> clis = new ArrayList<>();
+        conectarBD();
+        
+        try (PreparedStatement pstm = conexao.prepareStatement("select cand_cpf, cand_camp_nome, cand_nome, cand_camp_nro, cand_partido, cand_vice_nome, tipo_candidatura from CANDIDATO where tipo_candidatura = '"+categoria+"' ")) {
+            ResultSet rs = pstm.executeQuery();
+           
+            while(rs.next()){              
+                PrefeitoDAO cli = new PrefeitoDAO();
+                
+                cli.setCpf(rs.getString("cand_cpf"));
+                cli.setNomeReal(rs.getString("cand_nome"));
+                cli.setNomeFantasia(rs.getString("cand_camp_nome"));
+                cli.setNumeroCampanha(rs.getInt("cand_camp_nro"));
+                cli.setPartido(rs.getString("cand_partido"));
+                cli.setNomeVice(rs.getString("cand_vice_nome"));
+                cli.setCandidatura(rs.getString("tipo_candidatura"));
+                
+            clis.add(cli);
+            }   
+        }
+        
+       desconBD();
+        
+       return clis; 
+        
+    }
+
+
+public List<PrefeitoDAO> consultaTodosPorNome(String nome) throws SQLException{
+        
+    List<PrefeitoDAO> clis = new ArrayList<>();
+        conectarBD();
+        
+        try (PreparedStatement pstm = conexao.prepareStatement("select cand_cpf, cand_camp_nome, cand_nome, cand_camp_nro, cand_partido, cand_vice_nome, tipo_candidatura from CANDIDATO where cand_nome like '%"+nome+"%' OR cand_camp_nome like '%"+nome+"%' ")) {
+            ResultSet rs = pstm.executeQuery();
+           
+            while(rs.next()){              
+                PrefeitoDAO cli = new PrefeitoDAO();
+                
+                cli.setCpf(rs.getString("cand_cpf"));
+                cli.setNomeReal(rs.getString("cand_nome"));
+                cli.setNomeFantasia(rs.getString("cand_camp_nome"));
+                cli.setNumeroCampanha(rs.getInt("cand_camp_nro"));
+                cli.setPartido(rs.getString("cand_partido"));
+                cli.setNomeVice(rs.getString("cand_vice_nome"));
+                cli.setCandidatura(rs.getString("tipo_candidatura"));
+                
+            clis.add(cli);
+            }   
+        }
+        
+       desconBD();
+        
+       return clis; 
+        
+    }
 }

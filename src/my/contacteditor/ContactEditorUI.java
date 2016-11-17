@@ -36,15 +36,12 @@ public class ContactEditorUI extends javax.swing.JFrame {
         jMenu4 = new javax.swing.JMenu();
         jPopupMenu1 = new javax.swing.JPopupMenu();
         jPopupMenu2 = new javax.swing.JPopupMenu();
+        jLabel1 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu5 = new javax.swing.JMenu();
-        jMenu7 = new javax.swing.JMenu();
         jMenuItem6 = new javax.swing.JMenuItem();
         jMenuItem7 = new javax.swing.JMenuItem();
-        jMenu3 = new javax.swing.JMenu();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
         jMenu6 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
 
@@ -52,11 +49,11 @@ public class ContactEditorUI extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/my/contacteditor/teste.gif"))); // NOI18N
+
         jMenu1.setText("Opções");
 
         jMenu5.setText("Candidatos");
-
-        jMenu7.setText("Prefeito");
 
         jMenuItem6.setText("Cadastrar");
         jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
@@ -64,7 +61,7 @@ public class ContactEditorUI extends javax.swing.JFrame {
                 jMenuItem6ActionPerformed(evt);
             }
         });
-        jMenu7.add(jMenuItem6);
+        jMenu5.add(jMenuItem6);
 
         jMenuItem7.setText("Alterar/Excluir");
         jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
@@ -72,35 +69,18 @@ public class ContactEditorUI extends javax.swing.JFrame {
                 jMenuItem7ActionPerformed(evt);
             }
         });
-        jMenu7.add(jMenuItem7);
-
-        jMenu5.add(jMenu7);
-
-        jMenu3.setText("Vereador");
-
-        jMenuItem2.setText("Cadastrar");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
-            }
-        });
-        jMenu3.add(jMenuItem2);
-
-        jMenuItem3.setText("Consultar/Alterar/Excluir");
-        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem3ActionPerformed(evt);
-            }
-        });
-        jMenu3.add(jMenuItem3);
-
-        jMenu5.add(jMenu3);
+        jMenu5.add(jMenuItem7);
 
         jMenu1.add(jMenu5);
 
         jMenuBar1.add(jMenu1);
 
         jMenu6.setText("Exibir Todos");
+        jMenu6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu6MouseClicked(evt);
+            }
+        });
         jMenuBar1.add(jMenu6);
 
         jMenu2.setText("Sair");
@@ -122,11 +102,17 @@ public class ContactEditorUI extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addContainerGap(338, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 289, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(207, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addContainerGap())
         );
 
         pack();
@@ -140,16 +126,6 @@ public class ContactEditorUI extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_jMenu2MouseClicked
 
-    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-         
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem3ActionPerformed
-
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
-
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
         new TelaPrefeitoCadastro().setVisible(true);
         ContactEditorUI.this.dispose();
@@ -159,6 +135,11 @@ public class ContactEditorUI extends javax.swing.JFrame {
         new ConsultarExcluir().setVisible(true);
         ContactEditorUI.this.dispose();
     }//GEN-LAST:event_jMenuItem7ActionPerformed
+
+    private void jMenu6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu6MouseClicked
+        new ConsultarExcluir().setVisible(true);
+        ContactEditorUI.this.dispose();
+    }//GEN-LAST:event_jMenu6MouseClicked
 
 
     /**
@@ -200,16 +181,13 @@ public class ContactEditorUI extends javax.swing.JFrame {
        
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenu jMenu6;
-    private javax.swing.JMenu jMenu7;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JPopupMenu jPopupMenu1;

@@ -32,6 +32,7 @@ public class ConsultarExcluir extends javax.swing.JFrame {
         initComponents();
         DefaultTableModel modelo = (DefaultTableModel) tabelaConsulta.getModel();
         tabelaConsulta.setRowSorter(new TableRowSorter(modelo));
+        cbEscolha.setSelectedItem("NOME");
         
         cb.conectarBD();
         cb.popularComboBoxEstado(cbEstado);
@@ -75,6 +76,9 @@ public class ConsultarExcluir extends javax.swing.JFrame {
         cbPartido = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
         quantidadeRegistros = new javax.swing.JLabel();
+        cbCategoria = new javax.swing.JComboBox<>();
+        campoNome = new javax.swing.JTextField();
+        qtdRegistro = new javax.swing.JLabel();
 
         try {
             cpf.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
@@ -116,7 +120,7 @@ public class ConsultarExcluir extends javax.swing.JFrame {
             }
         });
 
-        cbEscolha.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "CPF", "Nº DE CAMPANHA", "ESTADO", "PARTIDO" }));
+        cbEscolha.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "NOME", "CPF", "Nº DE CAMPANHA", "ESTADO", "PARTIDO", "CATEGORIA" }));
         cbEscolha.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbEscolhaActionPerformed(evt);
@@ -127,13 +131,13 @@ public class ConsultarExcluir extends javax.swing.JFrame {
 
         tabelaConsulta.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "CPF", "Nome", "Nome de Campanha", "Nº Campanha", "Partido", "Vice-Candidato"
+                "CPF", "Nome", "Nome de Campanha", "Nº Campanha", "Partido", "Vice-Candidato", "Categoria"
             }
         ));
         tabelaConsulta.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -182,6 +186,16 @@ public class ConsultarExcluir extends javax.swing.JFrame {
 
         quantidadeRegistros.setFont(new java.awt.Font("Ubuntu", 1, 13)); // NOI18N
 
+        cbCategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "PREFEITO", "VEREADOR" }));
+        cbCategoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbCategoriaActionPerformed(evt);
+            }
+        });
+
+        qtdRegistro.setFont(new java.awt.Font("Ubuntu", 1, 13)); // NOI18N
+        qtdRegistro.setText("0");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -191,25 +205,31 @@ public class ConsultarExcluir extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addGap(78, 78, 78))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addComponent(jLabel1)
+                                .addComponent(cbCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(cbEscolha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(cbEscolha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addComponent(jLabel2)
+                                        .addGap(240, 240, 240))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addComponent(campoNome, javax.swing.GroupLayout.DEFAULT_SIZE, 195, Short.MAX_VALUE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(campoCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(numeroCampanha, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(cbPartido, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(cbEstado, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                        .addGap(195, 195, 195))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                                        .addComponent(numeroCampanha, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(cbEstado, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cbPartido, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(217, 217, 217)
+                        .addComponent(quantidadeRegistros)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton5)
@@ -217,8 +237,8 @@ public class ConsultarExcluir extends javax.swing.JFrame {
                         .addComponent(jButton2))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(quantidadeRegistros)
+                        .addGap(18, 18, 18)
+                        .addComponent(qtdRegistro)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -235,20 +255,25 @@ public class ConsultarExcluir extends javax.swing.JFrame {
                     .addComponent(cbEscolha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1)
                     .addComponent(campoCPF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(numeroCampanha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(numeroCampanha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(campoNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(cbEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(cbPartido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(cbCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(quantidadeRegistros)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton3)
                     .addComponent(jButton1)
                     .addComponent(jLabel3)
-                    .addComponent(quantidadeRegistros))
+                    .addComponent(qtdRegistro))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(37, 37, 37)
+                .addGap(25, 25, 25)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2)
                     .addComponent(jButton4)
@@ -271,7 +296,7 @@ public class ConsultarExcluir extends javax.swing.JFrame {
             }
             
             if(p.isEmpty()){
-                JOptionPane.showMessageDialog(null, "Banco de Dados Vazio!");
+                JOptionPane.showMessageDialog(null, "Não há registros que satisfazem a pesquisa!");
                 return;
             }
             
@@ -287,12 +312,13 @@ public class ConsultarExcluir extends javax.swing.JFrame {
                     p.get(i).getNomeFantasia(),
                     p.get(i).getNumeroCampanha(),
                     p.get(i).getPartido(),
-                    p.get(i).getNomeVice()
+                    p.get(i).getNomeVice(),
+                    p.get(i).getCandidatura()
                 });
                 
             }
             
-            quantidadeRegistros.setText(Integer.toString(modelo.getRowCount()));
+            qtdRegistro.setText(Integer.toString(modelo.getRowCount()));
             
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -332,6 +358,14 @@ public class ConsultarExcluir extends javax.swing.JFrame {
                     System.out.println("TESTE:  "+ cbPartido.getSelectedItem().toString().substring(0,2).trim());
                 }
                 
+                if(cbEscolha.getSelectedItem().equals("CATEGORIA")){
+                    p = (ArrayList<PrefeitoDAO>) cb.consultaTodosPorCategoria(cbCategoria.getSelectedItem().toString());
+                }
+                
+                if(cbEscolha.getSelectedItem().equals("NOME")){
+                    p = (ArrayList<PrefeitoDAO>) cb.consultaTodosPorNome(campoNome.getText().toString());
+                }
+                
                 
                 
             } catch (SQLException ex) {
@@ -340,7 +374,7 @@ public class ConsultarExcluir extends javax.swing.JFrame {
             }
             
             if(p.isEmpty()){
-                JOptionPane.showMessageDialog(null, "Banco de Dados Vazio!");
+                JOptionPane.showMessageDialog(null, "Não há registros que satisfazem a pesquisa!");
                 return;
             }
             
@@ -356,24 +390,33 @@ public class ConsultarExcluir extends javax.swing.JFrame {
                     p.get(i).getNomeFantasia(),
                     p.get(i).getNumeroCampanha(),
                     p.get(i).getPartido(),
-                    p.get(i).getNomeVice()
+                    p.get(i).getNomeVice(),
+                    p.get(i).getCandidatura()
                       
                 });
                 
             }
             
-            quantidadeRegistros.setText(Integer.toString(modelo.getRowCount()));
+            qtdRegistro.setText(Integer.toString(modelo.getRowCount()));
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void cbEscolhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbEscolhaActionPerformed
         if(cbEscolha.getSelectedItem().equals("CPF")){
             numeroCampanha.setEditable(false);
             numeroCampanha.setText("");
+            numeroCampanha.setEnabled(false);
             numeroCampanha.setBackground(Color.LIGHT_GRAY);
             cbPartido.setEnabled(false);
             cbEstado.setEnabled(false);
             campoCPF.setEditable(true);
+            campoCPF.setEnabled(true);
             campoCPF.setBackground(Color.WHITE);
+            cbCategoria.setEnabled(false);
+           
+            campoNome.setEnabled(false);
+            campoNome.setText("");
+            campoNome.setBackground(Color.LIGHT_GRAY);
+            
         }else{
             if(cbEscolha.getSelectedItem().equals("ESTADO")){   
                 numeroCampanha.setEditable(false);
@@ -381,10 +424,14 @@ public class ConsultarExcluir extends javax.swing.JFrame {
                 numeroCampanha.setBackground(Color.LIGHT_GRAY);
                 cbEstado.setEnabled(true);
                 cbPartido.setEnabled(false);
-                numeroCampanha.setEditable(false);
+                numeroCampanha.setEnabled(false);
                 campoCPF.setEditable(false);
                 campoCPF.setText("");
                 campoCPF.setBackground(Color.LIGHT_GRAY);
+                cbCategoria.setEnabled(false);
+                
+                campoNome.setEnabled(false);
+                campoNome.setBackground(Color.LIGHT_GRAY);
             }
         }
         
@@ -395,20 +442,64 @@ public class ConsultarExcluir extends javax.swing.JFrame {
                 campoCPF.setEditable(false);
                 campoCPF.setBackground(Color.LIGHT_GRAY);
                 numeroCampanha.setEditable(false);
+                numeroCampanha.setEnabled(false);
                 numeroCampanha.setBackground(Color.LIGHT_GRAY);
                 campoCPF.setText("");
                 numeroCampanha.setText("");
+                cbCategoria.setEnabled(false);
+                
+                campoNome.setEnabled(false);
+                campoNome.setBackground(Color.LIGHT_GRAY);
         }
         
         if(cbEscolha.getSelectedItem().equals("Nº DE CAMPANHA")){
                 cbEstado.setEnabled(false);
                 cbPartido.setEnabled(false);
                 numeroCampanha.setEditable(true);
+                numeroCampanha.setEnabled(true);
                 campoCPF.setEditable(false);
+                campoCPF.setEnabled(false);
                 campoCPF.setBackground(Color.LIGHT_GRAY);
                 numeroCampanha.setEditable(true);
                 numeroCampanha.setBackground(Color.WHITE);
                 campoCPF.setText("");
+                cbCategoria.setEnabled(false);
+                
+                campoNome.setEnabled(false);
+                campoNome.setBackground(Color.LIGHT_GRAY);
+                
+        }
+        
+        if(cbEscolha.getSelectedItem().equals("CATEGORIA")){
+                cbEstado.setEnabled(false);
+                cbPartido.setEnabled(false);
+                cbCategoria.setEnabled(true);
+                campoCPF.setEnabled(false);
+                campoCPF.setBackground(Color.LIGHT_GRAY);
+                numeroCampanha.setEnabled(false);
+                numeroCampanha.setBackground(Color.LIGHT_GRAY);
+                campoCPF.setText("");
+                numeroCampanha.setText("");
+                campoNome.setEnabled(false);
+                campoNome.setBackground(Color.LIGHT_GRAY);
+                
+        }
+        
+        if(cbEscolha.getSelectedItem().equals("NOME")){
+                campoNome.setEnabled(true);
+                campoNome.setEditable(true);
+                campoNome.setBackground(Color.WHITE);
+                cbEstado.setEnabled(false);
+                cbPartido.setEnabled(false);
+                cbCategoria.setEnabled(false);
+                campoCPF.setEditable(false);
+                campoCPF.setEnabled(false);
+                campoCPF.setBackground(Color.LIGHT_GRAY);
+                numeroCampanha.setEditable(false);
+                numeroCampanha.setEnabled(false);
+                numeroCampanha.setBackground(Color.LIGHT_GRAY);
+                campoCPF.setText("");
+                numeroCampanha.setText("");
                 
         }
     }//GEN-LAST:event_cbEscolhaActionPerformed
@@ -468,6 +559,10 @@ public class ConsultarExcluir extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_cbPartidoActionPerformed
 
+    private void cbCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbCategoriaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbCategoriaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -489,6 +584,8 @@ public static void main(String args[]) {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JFormattedTextField campoCPF;
+    private javax.swing.JTextField campoNome;
+    private javax.swing.JComboBox<String> cbCategoria;
     private javax.swing.JComboBox<String> cbEscolha;
     private javax.swing.JComboBox<String> cbEstado;
     private javax.swing.JComboBox<String> cbPartido;
@@ -504,6 +601,7 @@ public static void main(String args[]) {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField numeroCampanha;
+    private javax.swing.JLabel qtdRegistro;
     private javax.swing.JLabel quantidadeRegistros;
     private javax.swing.JTable tabelaConsulta;
     // End of variables declaration//GEN-END:variables
