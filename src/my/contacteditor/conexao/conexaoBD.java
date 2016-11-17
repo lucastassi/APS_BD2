@@ -340,6 +340,7 @@ public List<PrefeitoDAO> consultaTodosPorPartido(String cod_partido) throws SQLE
                 cli.setNumeroCampanha(rs.getInt("cand_camp_nro"));
                 cli.setPartido(rs.getString("cand_partido"));
                 cli.setNomeVice(rs.getString("cand_vice_nome"));
+                cli.setCandidatura(rs.getString("tipo_candidatura"));
                 
                 
             clis.add(cli);
